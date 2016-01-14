@@ -1,0 +1,56 @@
+/* Text Styles*/
+.text-primary{
+color:#795548;
+font-weight:bold;
+
+}
+
+#appTitle, .titleText{
+	text-align:center;
+}
+
+.ipTextbox{
+	width:75px;
+}
+
+#SChart{
+
+	height: 100px;
+}
+
+.seasons{
+
+	border: 1px solid #e6e6e6;
+	padding-left: 25px;
+}
+/* Slider Start */
+.axis {
+  font: 10px sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.axis .domain {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.axis .halo {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+.slider .handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1.25px;
+  cursor: crosshair;
+}
+/* slider end */

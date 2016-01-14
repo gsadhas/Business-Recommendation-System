@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+{% include 'header.html' %}
+
+<div class="container">
+<div class="row" id="appTitle">
+<h2><strong>Recommendation System for Business</strong></h2>
+</div>
+    
+    <hr/>
+    <div class="row">
+			<h3 class='titleText'>Dataset Statistics</h3>
+			<br/>
+			<div class='col-lg-6'>
+			<img src='../static/images/reviews_with_length.png' alt='reviews length' width='600px' height='400px'/>
+					</div>
+					<div class='col-lg-6'>
+			<img src='../static/images/reviewVsRatings.png' width='600px' height='400px' alt='reviews length'/>
+					</div>
+    </div>
+	
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#home").removeClass("active");
+	$("#home").addClass("active");
+	$("#analysis").removeClass("active");
+	
+});
+</script>
+{% include 'footer.html' %}

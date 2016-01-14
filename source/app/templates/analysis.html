@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+{% include 'header.html' %}
+
+<div class="container">
+<div class="row" id="appTitle">
+<h2><strong>Recommendation System for Business</strong></h2>
+</div>
+    <hr/>
+    <div class="row">
+			<h3 class='titleText'>Dataset Analysis</h3>
+			<form action="/getinsight/" method="post" >
+			<div class="row">
+				<div class="col-lg-3">
+				Minimum review length: <input type='text' name='minrl' class="ipTextbox"></input>
+				</div>
+				<div class="col-lg-3">
+				Maximum review length: <input type='text' name='maxrl' class="ipTextbox"></input>
+				</div>
+				<div class="col-lg-2">
+				Top reasons: <input type='text' name='faci' class="ipTextbox"></input>
+				</div>
+				<div class="col-lg-2">
+				Hot topics: <input type='text' name='topics' class="ipTextbox"></input>
+				</div>
+
+				<input type="hidden" id="hSeason" value="" name='seas'/>
+				<div class="col-lg-2">
+				<button class="btn btn-sm btn-info">Get Insight</button>
+				</div>
+			</div>
+			</form>
+			<div class='row'>
+				<div class='col-lg-2' style='height:100px;margin-top:15px;padding-top:45px'>
+					Select season </br>
+					
+
+
+				</div>
+				<div id="SChart" class='col-lg-8'>
+					<div id="schart"></div>
+				</div>
+				<div class='col-lg-2'></br>
+					<div class='seasons'>
+					All Seasons : 0 - 1 </br>
+					Spring : 1 - 2 </br>
+					Summer : 2 - 3 </br>
+					Autumn : 3 - 4 </br>
+					Winter : 4 - 5 
+				</div>
+				</div>
+			</div>
+			<br/>
+			<div class='row'>
+					<div class='col-lg-3'>
+						<strong>
+					Review filtered : {{reviewSelected}}</strong>
+					</div>
+					<div class='col-lg-3'>
+						<strong>
+					Minimum review length : {{minrl}}</strong>
+					</div>
+					<div class='col-lg-3'>
+						<strong>
+					Maximum review length : {{maxrl}}
+					</strong>
+					</div>
+					<div class='col-lg-3'>
+						<strong>
+					Season: {{seas}}
+					</strong>
+					</div>
+				</div>
+
+			<div class='row'>
+				<div class='col-lg-4'>
+				<h4 class='titleText'><strong>Below are top reasons to get best rating</strong></h4> </br>
+				{% for item in facilities %}
+					{{item[0]}} : {{item[1]}} <br/>
+				{% endfor %}
+				</div>
+			<div class='col-lg-4'>
+				<h4 class='titleText'><strong>Topics</strong></h4> </br>
+				{% for topic in topics %}
+					{{topic[0]}} : {{topic[1]}} <br/>
+				{% endfor %}
+
+			</div>
+
+			<div class='col-lg-4'>
+				<h4 class='titleText'><strong>User ratings prediction</strong></h4> </br>
+			</br>
+			Rating predicted : {{rating}}
+			<form action="/getrating/" method="post" >
+			<textarea rows="4" cols="50" id="reviewText" name='rText'>{{rText}}
+			</textarea>
+			
+			
+			<button class="btn btn-sm btn-info">Get Rating</button>
+			</form>
+			</div>
+			
+			</div>
+
+	</div>
+    <div>
+
+    </div>
+	
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#home").removeClass("active");
+	$("#analysis").addClass("active");
+	
+});
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script>
+
+var margin = {top: 0, right: 50, bottom: 0, left: 50},
+    width = 560 - margin.left - margin.right,
+    height = 150 - margin.bottom - margin.top;
+
+var x = d3.scale.linear()
+    .domain([0,5])
+    .range([0,width])
+    .clamp(true);
+
+var brush = d3.svg.brush()
+    .x(x)
+    .extent([0, 0])
+    .on("brush", brushed);
+
+var svg = d3.select("#schart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height /2 + ")")
+    .call(d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .tickFormat(function(d) {  return d ; })
+      .ticks(5)
+      .tickSize(0)
+      .tickPadding(12))
+  .select(".domain")
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "halo");
+
+var slider = svg.append("g")
+    .attr("class", "slider")
+    .call(brush);
+
+slider.selectAll(".extent,.resize")
+    .remove();
+
+slider.select(".background")
+    .attr("height", height);
+
+var handle = slider.append("circle")
+    .attr("class", "handle")
+    .attr("transform", "translate(0," + height / 2 + ")")
+    .attr("r", 9);
+
+slider
+    .call(brush.event)
+  .transition() // gratuitous intro!
+    .duration(750)
+    .call(brush.extent([70, 70]))
+    .call(brush.event);
+
+function brushed() {
+  var value = brush.extent()[0];
+  if (event.sourceEvent) { // not a programmatic event
+    value = x.invert(d3.mouse(this)[0]);
+    brush.extent([value, value]);
+  }
+
+  console.log(value)
+  handle.attr("cx", x(value));
+  if (value <1 ){
+  	console.log(value)
+  	$("#hSeason").val('0')
+  	d3.select("body").style("background-color", "#ffffff");
+  }
+  if (value <2 && value >1 ){
+  	console.log(value)
+  	$("#hSeason").val('1')
+  d3.select("body").style("background-color", "#a1d99b");
+  }
+  if (value < 3 && value >2){
+  	console.log(value)
+  	$("#hSeason").val('2')
+  	d3.select("body").style("background-color", "#fd8d3c");
+  }
+  if (value <4 && value>3 ){
+  	console.log(value)
+  	$("#hSeason").val('3')
+  	d3.select("body").style("background-color", "#e7cb94");
+  }
+  if (value <5 && value >4){
+  	console.log(value)
+  	$("#hSeason").val('4')
+  	d3.select("body").style("background-color", "#c6dbef");
+  }
+}
+
+</script>
+{% include 'footer.html' %}
