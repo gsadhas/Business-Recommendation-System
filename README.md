@@ -1,2 +1,11 @@
 # Business-Recommendation-System
-IDS 561 - Analytics for Big Data project
+Following libraries/framework used,
+* NumPy
+* scikit-learn
+* Flask framework
+* D3.js
+* HTML
+* CSS
+* Bootstrap.css
+* JavaScript
+* jQuery
