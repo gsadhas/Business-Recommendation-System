@@ -1,6 +1,6 @@
 # Business-Recommendation-System
 
-An end to end Machine Learning System built using below technologies to provide recommendation to business owners to improve their business. The project video shows demo to improve restaurant business that includes customers' preferences, opinons and rating. The project is integrated with Machine Leaning models such as topic and sentiment analysis model.
+An end to end Machine Learning System built using below technologies to provide recommendation to business owners to improve their business. The project video shows demo to improve restaurant business that includes customers' preferences, opinons and rating. The project is integrated with Machine Leaning models such as topic and sentiment analysis model. The system is built using restaurants reviews obtained from yelp.com
 
 Project link :  https://www.youtube.com/watch?v=W3V68kuE1As
 
